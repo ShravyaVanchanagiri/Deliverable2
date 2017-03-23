@@ -1,3 +1,6 @@
 /**
- * Created by shravya on 23/3/17.
+ * Created by shravya on 21/3/17.
  */
+(function(){
+    angular.module('postComment.home',[]);
+})();
