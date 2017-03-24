@@ -8,6 +8,7 @@
         "ui.router",
         "ngResource",
         "ui.select",
-        "ngSanitize"
+        "ngSanitize",
+        "ngTable"
     ])
 })();
