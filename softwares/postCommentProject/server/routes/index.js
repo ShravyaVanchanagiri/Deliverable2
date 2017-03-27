@@ -12,6 +12,7 @@ router = function (app) {
   app.post('/addComment',postRoutes.addComment);
   app.post('/addLike',postRoutes.addLike);
   app.delete('/removeLike',postRoutes.removeLike);
+  app.get('/likeCount',postRoutes.likeCount);
 };
 module.exports = router;
 

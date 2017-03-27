@@ -21,6 +21,7 @@
         vm.showLessItems = showLessItems;
         vm.addComment = addComment;
         vm.sendLike = sendLike;
+        vm.likeCount = likeCount;
         getPost();
 
         function getPost() {
@@ -32,6 +33,7 @@
                 console.log(vm.selectedPost.comments.length);
                 vm.pagesShown = 1;
                 vm.pageSize1 = 3;
+                vm.likesForPost = vm.selectedPost.likes.length;
             }
 
             function failure(failure) {
@@ -55,6 +57,7 @@
             vm.pagesShown = vm.pagesShown - 1;
             vm.lessCom = true;
         }
+
         function addComment() {
             console.log("cpming here");
             var curDat = Date.now();
@@ -87,12 +90,13 @@
             };
             if (vm.isLiked == false) {
                 vm.isLiked = true;
-                vm.count +=1;
+                vm.count += 1;
                 homeService.addLike(query).then(success).catch(failure);
                 function success(response) {
                     console.log("success");
                     console.log(response.data.likeId);
                     vm.likeId = response.data.likeId;
+                    likeCount($stateParams.id);
                 }
 
                 function failure(failure) {
@@ -101,19 +105,37 @@
             } else {
                 console.log("in remove");
                 vm.isLiked = false;
-                vm.count -=1;
+                vm.count -= 1;
                 var query1 = {
-                    "postId" : $stateParams.id,
-                    "likeId" : vm.likeId
+                    "postId": $stateParams.id,
+                    "likeId": vm.likeId
                 }
                 homeService.removeLike(query1).then(success).catch(failure);
-                function success(response){
+                function success(response) {
                     console.log("query removed");
+                    likeCount($stateParams.id);
                 }
-                function failure(failure){
+
+                function failure(failure) {
                     console.log(failure);
                 }
 
+            }
+        }
+
+        function likeCount(postId) {
+            console.log("in likecount function");
+            vm.likesForPost = 0;
+            var query = {
+                "postId": postId
+            }
+            homeService.findCount(query).then(success).catch(failure);
+            function success(response) {
+                vm.likesForPost = response.data;
+            }
+
+            function failure(failure) {
+                console.log(failure);
             }
         }
     }

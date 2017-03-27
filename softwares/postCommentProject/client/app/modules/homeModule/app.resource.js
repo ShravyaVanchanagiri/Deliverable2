@@ -42,6 +42,10 @@
             'removeLike' : {
                 method : 'DELETE',
                 url: '/removeLike'
+            },
+            'likeCount' : {
+                method : 'GET',
+                url: '/likeCount'
             }
         }
     }
